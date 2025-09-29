@@ -5,25 +5,22 @@
 static sqlite3* db = nullptr;
 
 bool initDatabase(const std::string& dbName) {
-    int rc = sqlite3_open(dbName.c_str(), &db);
-    if (rc) {
+    if (sqlite3_open(dbName.c_str(), &db)) {
         std::cerr << "Can't open database: " << sqlite3_errmsg(db) << "\n";
         return false;
     }
 
-    const char* createTableSQL =
-        "CREATE TABLE IF NOT EXISTS appointments ("
-        "id INTEGER PRIMARY KEY AUTOINCREMENT, "
-        "name TEXT NOT NULL, "
-        "service TEXT NOT NULL, "
-        "stylist TEXT NOT NULL, "
-        "schedule TEXT NOT NULL, "
-        "paymentMethod TEXT NOT NULL, "
-        "amountPaid INTEGER NOT NULL);";
+    const char* sql = "CREATE TABLE IF NOT EXISTS appointments ("
+                      "id INTEGER PRIMARY KEY AUTOINCREMENT, "
+                      "Name TEXT, "
+                      "Service TEXT, "
+                      "Stylist TEXT, "
+                      "Schedule TEXT, "
+                      "Payment TEXT, "
+                      "AmountPaid INTEGER);";   // includes amountPaid
 
     char* errMsg = nullptr;
-    rc = sqlite3_exec(db, createTableSQL, nullptr, nullptr, &errMsg);
-    if (rc != SQLITE_OK) {
+    if (sqlite3_exec(db, sql, nullptr, nullptr, &errMsg) != SQLITE_OK) {
         std::cerr << "SQL error: " << errMsg << "\n";
         sqlite3_free(errMsg);
         return false;
@@ -40,14 +37,12 @@ bool saveAppointment(
     const std::string& paymentMethod,
     int amountPaid
 ) {
-    const char* insertSQL =
-        "INSERT INTO appointments (name, service, stylist, schedule, paymentMethod, amountPaid) "
-        "VALUES (?, ?, ?, ?, ?, ?);";
+    std::string sql = "INSERT INTO appointments (name, service, stylist, schedule, payment, amountPaid) "
+                      "VALUES (?, ?, ?, ?, ?, ?);";
 
     sqlite3_stmt* stmt;
-    int rc = sqlite3_prepare_v2(db, insertSQL, -1, &stmt, nullptr);
-    if (rc != SQLITE_OK) {
-        std::cerr << "Failed to prepare statement: " << sqlite3_errmsg(db) << "\n";
+    if (sqlite3_prepare_v2(db, sql.c_str(), -1, &stmt, nullptr) != SQLITE_OK) {
+        std::cerr << "Prepare failed: " << sqlite3_errmsg(db) << "\n";
         return false;
     }
 
@@ -58,9 +53,8 @@ bool saveAppointment(
     sqlite3_bind_text(stmt, 5, paymentMethod.c_str(), -1, SQLITE_TRANSIENT);
     sqlite3_bind_int(stmt, 6, amountPaid);
 
-    rc = sqlite3_step(stmt);
-    if (rc != SQLITE_DONE) {
-        std::cerr << "Insert failed: " << sqlite3_errmsg(db) << "\n";
+    if (sqlite3_step(stmt) != SQLITE_DONE) {
+        std::cerr << "Execution failed: " << sqlite3_errmsg(db) << "\n";
         sqlite3_finalize(stmt);
         return false;
     }
