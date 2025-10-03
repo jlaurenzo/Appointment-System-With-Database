@@ -10,7 +10,7 @@ static int createTable(const char* s); //Gagawin nya yung table
 
 int main() {
 
-    const char* dir = "C:\\Users\\cpazj\\OneDrive\\Desktop\\PROJECT\\APPOINTMENTS.db";
+    const char* dir = "Appointments.db";
     sqlite3* DB;
 
     createDB(dir); //Sya mag call ng function sa taas
@@ -33,14 +33,14 @@ static int createDB(const char* s) {
 static int createTable(const char* s) {
     sqlite3*  DB;
 
-    string sql = "CREATE TABLE IF NOT EXISTS APPOINTMENTS("
+    string sql = "CREATE TABLE IF NOT EXISTS Appointments("
         "NO INTEGER PRIMARY KEY AUTOINCREMENT, "
         "NAME               TEXT NOT NULL, "
         "SERVICE            TEXT NOT NULL, "
         "STYLIST            TEXT NOT NULL, "
         "SCHEDULE           TEXT NOT NULL, "
         "PAYMENT_METHOD     INT NOT NULL,  "
-        "AMOUNT PAID        INT NOT NULL);";
+        "AMOUNT_PAID        INT NOT NULL);";
 try {
     int exit = 0;
     exit = sqlite3_open(s, &DB);
