@@ -3,14 +3,8 @@
         {
             "type": "cppbuild",
             "label": "C/C++: g++.exe build active file",
-            "command": "C:\\msys64\\ucrt64\\bin\\g++.exe",
-            "args": [
-                "-fdiagnostics-color=always",
-                "-g",
-                "${file}",
-                "-o",
-                "${fileDirname}\\${fileBasenameNoExtension}.exe"
-            ],
+            "command": "g++",
+            "args": ["-g", "database.cpp", "-o", "database", "-lsqlite3"],
             "options": {
                 "cwd": "${fileDirname}"
             },

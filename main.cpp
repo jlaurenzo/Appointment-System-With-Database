@@ -1,4 +1,3 @@
-#include "database.h"
 #include <iostream>
 #include <thread>
 #include <chrono>
@@ -32,11 +31,6 @@ void waitEnter(const string & msg = "Press Enter to go back...") {
     cin.get();
 }
 int  main() {
-    if (!initDatabase("appointments.db")) {
-    cout << "Failed to initialize database.\n";
-    return 1;
-}
-
     string name;
     int choice = 0, choice2 = -1, choice3 = -1, choice4 = -1, choice5 = -1, choice6 = -1, choice7 = -1;
     int cash, amount, paid;
@@ -331,26 +325,6 @@ int  main() {
 
                                 if (ok) {
                                     cout << "Successfully paid, Thank you!\n";
-                                    cout << "Successfully paid, Thank you!\n";
-
-                                    saveAppointment(
-                                        name,
-                                        "Hair Service",
-                                        (choice4 == 1 ? "Lourd Ryan Ramos" :
-                                            choice4 == 2 ? "Jing Monis" :
-                                            choice4 == 3 ? "Alex Carbonell" :
-                                            choice4 == 4 ? "Henri Calayag" :
-                                        "Nelson Cruz"),
-                                        "Schedule option " + std::to_string(choice5),
-                                        (choice6 == 1 ? "Gcash" :
-                                            choice6 == 2 ? "VISA" :
-                                            choice6 == 3 ? "MasterCard" :
-                                            choice6 == 4 ? "ApplePay" :
-                                            choice6 == 5 ? "American Express" :
-                                            choice6 == 6 ? "PayPal" :
-                                            choice6 == 7 ? "PayMaya" : "Unknown"),
-                                        choice7   // this one stays int
-                                        );
                                     break;
                                 } else {
                                     cout << "Invalid payment, please send the exact price for that service.\n";
@@ -627,25 +601,6 @@ int  main() {
 
                                 if (ok) {
                                     cout << "Successfully paid, Thank you!\n";
-
-                                    saveAppointment(
-                                        name,
-                                        "Hair Service",
-                                        (choice4 == 1 ? "Lourd Ryan Ramos" :
-                                            choice4 == 2 ? "Jing Monis" :
-                                            choice4 == 3 ? "Alex Carbonell" :
-                                            choice4 == 4 ? "Henri Calayag" :
-                                        "Nelson Cruz"),
-                                        "Schedule option " + std::to_string(choice5),
-                                        (choice6 == 1 ? "Gcash" :
-                                            choice6 == 2 ? "VISA" :
-                                            choice6 == 3 ? "MasterCard" :
-                                            choice6 == 4 ? "ApplePay" :
-                                            choice6 == 5 ? "American Express" :
-                                            choice6 == 6 ? "PayPal" :
-                                            choice6 == 7 ? "PayMaya" : "Unknown"),
-                                        choice7   // this one stays int
-                                        );
                                     break;
                                 } else {
                                     cout << "Invalid payment, please send the exact price for that service.\n";

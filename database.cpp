@@ -1,64 +1,64 @@
-#include "database.h"
-#include <sqlite3.h>
 #include <iostream>
+#include <stdio.h>
+#include <sqlite3.h>
 
-static sqlite3* db = nullptr;
+using namespace std;
 
-bool initDatabase(const std::string& dbName) {
-    if (sqlite3_open(dbName.c_str(), &db)) {
-        std::cerr << "Can't open database: " << sqlite3_errmsg(db) << "\n";
-        return false;
-    }
+static int createDB(const char* s); //Gagawin nya yung database
+static int createTable(const char* s); //Gagawin nya yung table
 
-    const char* sql = "CREATE TABLE IF NOT EXISTS appointments ("
-                      "id INTEGER PRIMARY KEY AUTOINCREMENT, "
-                      "Name TEXT, "
-                      "Service TEXT, "
-                      "Stylist TEXT, "
-                      "Schedule TEXT, "
-                      "Payment TEXT, "
-                      "AmountPaid INTEGER);";   // includes amountPaid
 
-    char* errMsg = nullptr;
-    if (sqlite3_exec(db, sql, nullptr, nullptr, &errMsg) != SQLITE_OK) {
-        std::cerr << "SQL error: " << errMsg << "\n";
-        sqlite3_free(errMsg);
-        return false;
-    }
+int main() {
 
-    return true;
+    const char* dir = "C:\\Users\\cpazj\\OneDrive\\Desktop\\PROJECT\\APPOINTMENTS.db";
+    sqlite3* DB;
+
+    createDB(dir); //Sya mag call ng function sa taas
+    createTable(dir); //mag call ng function sa taas
+
+    return 0;
 }
 
-bool saveAppointment(
-    const std::string& name,
-    const std::string& service,
-    const std::string& stylist,
-    const std::string& schedule,
-    const std::string& paymentMethod,
-    int amountPaid
-) {
-    std::string sql = "INSERT INTO appointments (name, service, stylist, schedule, payment, amountPaid) "
-                      "VALUES (?, ?, ?, ?, ?, ?);";
+static int createDB(const char* s) {
+    sqlite3 * DB;
+    int exit = 0;
 
-    sqlite3_stmt* stmt;
-    if (sqlite3_prepare_v2(db, sql.c_str(), -1, &stmt, nullptr) != SQLITE_OK) {
-        std::cerr << "Prepare failed: " << sqlite3_errmsg(db) << "\n";
-        return false;
+    exit = sqlite3_open(s, &DB); // mag open ng database, pag wala pa, create sya ng database.
+
+    sqlite3_close(DB);
+
+    return 0;
+}
+
+static int createTable(const char* s) {
+    sqlite3*  DB;
+
+    string sql = "CREATE TABLE IF NOT EXISTS APPOINTMENTS("
+        "NO INTEGER PRIMARY KEY AUTOINCREMENT, "
+        "NAME               TEXT NOT NULL, "
+        "SERVICE            TEXT NOT NULL, "
+        "STYLIST            TEXT NOT NULL, "
+        "SCHEDULE           TEXT NOT NULL, "
+        "PAYMENT_METHOD     INT NOT NULL,  "
+        "AMOUNT PAID        INT NOT NULL);";
+try {
+    int exit = 0;
+    exit = sqlite3_open(s, &DB);
+
+    char* messageError;
+    exit = sqlite3_exec(DB, sql.c_str(), NULL, 0, &messageError);
+
+    if (exit != SQLITE_OK) {
+        cerr << "Error Create Table!" << messageError << "\n";
+        sqlite3_free(messageError);
+    } else {
+        cout << "Table created Successfully" << "\n";
+        sqlite3_close(DB);
     }
-
-    sqlite3_bind_text(stmt, 1, name.c_str(), -1, SQLITE_TRANSIENT);
-    sqlite3_bind_text(stmt, 2, service.c_str(), -1, SQLITE_TRANSIENT);
-    sqlite3_bind_text(stmt, 3, stylist.c_str(), -1, SQLITE_TRANSIENT);
-    sqlite3_bind_text(stmt, 4, schedule.c_str(), -1, SQLITE_TRANSIENT);
-    sqlite3_bind_text(stmt, 5, paymentMethod.c_str(), -1, SQLITE_TRANSIENT);
-    sqlite3_bind_int(stmt, 6, amountPaid);
-
-    if (sqlite3_step(stmt) != SQLITE_DONE) {
-        std::cerr << "Execution failed: " << sqlite3_errmsg(db) << "\n";
-        sqlite3_finalize(stmt);
-        return false;
-    }
-
-    sqlite3_finalize(stmt);
-    return true;
+}
+catch (const exception & e)
+{
+    cerr << e.what();
+}
+return 0;
 }
