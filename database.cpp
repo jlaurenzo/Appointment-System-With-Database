@@ -6,6 +6,7 @@ using namespace std;
 
 static int createDB(const char* s); //Gagawin nya yung database
 static int createTable(const char* s); //Gagawin nya yung table
+static int insertData(const char* s); //For insert ng data
 
 
 int main() {
@@ -15,6 +16,7 @@ int main() {
 
     createDB(dir); //Sya mag call ng function sa taas
     createTable(dir); //mag call ng function sa taas
+    insertData(dir); //mag call ng function para mag insert ng data.
 
     return 0;
 }
@@ -39,7 +41,7 @@ static int createTable(const char* s) {
         "SERVICE            TEXT NOT NULL, "
         "STYLIST            TEXT NOT NULL, "
         "SCHEDULE           TEXT NOT NULL, "
-        "PAYMENT_METHOD     INT NOT NULL,  "
+        "PAYMENT_METHOD     TEXT NOT NULL,  "
         "AMOUNT_PAID        INT NOT NULL);";
 try {
     int exit = 0;
@@ -60,5 +62,26 @@ catch (const exception & e)
 {
     cerr << e.what();
 }
+
+return 0;
+}
+
+static int insertData(const char* s)
+{
+    sqlite3* DB;
+    char* messageError;
+
+    int exit = sqlite3_open(s, &DB);
+    string sql("INSERT INTO Appointments "
+                "(NAME, SERVICE, STYLIST, SCHEDULE, PAYMENT_METHOD, AMOUNT_PAID) " 
+                "VALUES('John','HairCut', 'Juan', '8', 'Gcash', '200' );");
+
+    exit = sqlite3_exec(DB, sql.c_str(), NULL, 0, &messageError);
+    if (exit != SQLITE_OK) {
+        cerr << "Error Inserting Data!" << "\n";
+        sqlite3_free(messageError);
+    } else {
+        cout <<"Data Recorded Successfully!" <<"\n";
+    }
 return 0;
 }
