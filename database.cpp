@@ -1,91 +1,99 @@
-#include <iostream>
 #include <sqlite3.h>
 #include <string>
-
+#include <iostream>
 using namespace std;
 
-// initialization ng db
 int createDB(const char* s);
 int createTable(const char* s);
 int insertData(const char* s,
                string name,
                string service,
                string stylist,
-               string schedule,
+               string day,
+               string time,
                string paymentMethod,
                int amountPaid);
+int displayAllAppointments(const char* s);
 
-// Gagawin DB
 int createDB(const char* s) {
     sqlite3* DB;
     int exit = sqlite3_open(s, &DB);
-    if (exit != SQLITE_OK) {
-        cerr << "Error creating DB: " << sqlite3_errmsg(DB) << endl;
-        return exit;
-    }
     sqlite3_close(DB);
-    return 0;
+    return exit;
 }
 
-// gagawin yung table sa db
 int createTable(const char* s) {
     sqlite3* DB;
-    char* messageError;
+    char* messageError = nullptr;
     string sql = "CREATE TABLE IF NOT EXISTS Appointments("
                  "NO INTEGER PRIMARY KEY AUTOINCREMENT, "
                  "NAME TEXT NOT NULL, "
                  "SERVICE TEXT NOT NULL, "
                  "STYLIST TEXT NOT NULL, "
-                 "SCHEDULE TEXT NOT NULL, "
+                 "DAY TEXT NOT NULL, "
+                 "TIME TEXT NOT NULL, "
                  "PAYMENT_METHOD TEXT NOT NULL, "
                  "AMOUNT_PAID INT NOT NULL);";
 
     int exit = sqlite3_open(s, &DB);
-    exit = sqlite3_exec(DB, sql.c_str(), NULL, 0, &messageError);
-
-    if (exit != SQLITE_OK) {
-        cerr << "Error Creating Table: " << messageError << endl;
-        sqlite3_free(messageError);
-    } else {
-        cout << "Table created successfully.\n";
-    }
+    sqlite3_exec(DB, sql.c_str(), NULL, 0, &messageError);
     sqlite3_close(DB);
-    return 0;
+    return exit;
 }
-
-// mag insert ng data sa table ng db
 int insertData(const char* s,
                string name,
                string service,
                string stylist,
-               string schedule,
+               string day,
+               string time,
                string paymentMethod,
                int amountPaid)
 {
     sqlite3* DB;
     char* messageError = nullptr;
-
     int exit = sqlite3_open_v2(s, &DB, SQLITE_OPEN_READWRITE | SQLITE_OPEN_CREATE, NULL);
 
-    if (exit != SQLITE_OK) {//Print yung message a cannot open if hindi mag bukas yung db
-        cerr << "Cannot open DB: " << sqlite3_errmsg(DB) << endl;
-        return exit;
-    }
-
-    string sql = "INSERT INTO Appointments (NAME, SERVICE, STYLIST, SCHEDULE, PAYMENT_METHOD, AMOUNT_PAID) VALUES('" +//IDK ginaya ko lang to dun sa youtube HAHAHA
-                 name + "', '" + service + "', '" + stylist + "', '" + schedule + "', '" + paymentMethod + "', " + to_string(amountPaid) + ");";
+    string sql = "INSERT INTO Appointments (NAME, SERVICE, STYLIST, DAY, TIME, PAYMENT_METHOD, AMOUNT_PAID) VALUES('" +
+                 name + "', '" + service + "', '" + stylist + "', '" + day + "', '" + time + "', '" + paymentMethod + "', " +
+                 to_string(amountPaid) + ");";
 
     sqlite3_exec(DB, "BEGIN TRANSACTION;", NULL, 0, NULL);
-    exit = sqlite3_exec(DB, sql.c_str(), NULL, 0, &messageError);
+    sqlite3_exec(DB, sql.c_str(), NULL, 0, &messageError);
     sqlite3_exec(DB, "COMMIT;", NULL, 0, NULL);
 
-    if (exit != SQLITE_OK) { //Display nya yung message if mabuksan nya yung db pero ayaw mag insert ng data sa table.
-        cerr << "Error inserting data: " << messageError << endl;
-        sqlite3_free(messageError);
-    } else {
-        cout << "Appointment saved successfully!\n";
-    }
+    sqlite3_close(DB);
+    return exit;
+}
 
+int displayAllAppointments(const char* s) {
+    sqlite3* DB;
+    sqlite3_stmt* stmt;
+    int exit = sqlite3_open(s, &DB);
+    if (exit != SQLITE_OK) return exit;
+
+    const char* sql = "SELECT NAME, SERVICE, STYLIST, DAY, TIME, PAYMENT_METHOD, AMOUNT_PAID FROM Appointments;";
+
+    if (sqlite3_prepare_v2(DB, sql, -1, &stmt, nullptr) != SQLITE_OK) {
+        sqlite3_close(DB);
+    }
+    cout << "================================ Scheduled Appointments ===================================\n";
+
+    while (sqlite3_step(stmt) == SQLITE_ROW) {
+        cout << "------------------------------------------------------------------------------------------\n";
+        cout << "Name: " << sqlite3_column_text(stmt, 0) << "\n";
+        cout << "Service: " << sqlite3_column_text(stmt, 1) << "\n";
+        cout << "Stylist: " << sqlite3_column_text(stmt, 2) << "\n";
+        cout << "Day: " << sqlite3_column_text(stmt, 3) << "\n";
+        cout << "Time: " << sqlite3_column_text(stmt, 4) << "\n";
+        cout << "Payment Method: " << sqlite3_column_text(stmt, 5) << "\n";
+        cout << "Amount Paid: " << sqlite3_column_int(stmt, 6) << "\n";
+    }
+    cout << "------------------------------------------------------------------------------------------\n";
+    cout << "End of weekly schedule.\n";
+
+    sqlite3_finalize(stmt);
     sqlite3_close(DB);
     return 0;
 }
+
+
