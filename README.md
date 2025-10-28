@@ -79,23 +79,6 @@ It simulates a booking system where customers can choose services, select stylis
 
 ---
 
-## 🧱 Database Schema
-
-The SQLite database (`appointments.db`) contains a single table:
-
-| Column | Type | Description |
-|--------|------|-------------|
-| `id` | INTEGER PRIMARY KEY | Unique appointment ID |
-| `name` | TEXT | Customer full name |
-| `service` | TEXT | Selected salon/treatment service |
-| `stylist` | TEXT | Assigned hairstylist |
-| `day` | TEXT | Appointment day |
-| `time` | TEXT | Appointment time |
-| `payment` | TEXT | Payment method |
-| `amount` | INTEGER | Paid amount |
-
----
-
 ## 🪶 License
 
 This project is for **educational purposes only**.  
