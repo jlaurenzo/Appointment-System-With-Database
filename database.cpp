@@ -46,7 +46,7 @@ bool isSlotTaken(const char* s, const string& day, const string& time) {
     sqlite3* DB;
     sqlite3_stmt* stmt;
     int exit = sqlite3_open(s, &DB);
-    if (exit != SQLITE_OK) return true; // safety fallback
+    if (exit != SQLITE_OK) return true;
 
     const char* sql = "SELECT COUNT(*) FROM Appointments WHERE DAY = ? AND TIME = ?;";
     sqlite3_prepare_v2(DB, sql, -1, &stmt, nullptr);
@@ -100,21 +100,20 @@ int displayAllAppointments(const char* s) {
     if (sqlite3_prepare_v2(DB, sql, -1, &stmt, nullptr) != SQLITE_OK) {
         sqlite3_close(DB);
     }
-    cout << "================================ Scheduled Appointments ===================================\n";
-
+    cout <<     "\n* * * * * * * * * * * * * * * *Scheduled Appointments* * * * * * * * * * * * * * * * * * *\n";
     while (sqlite3_step(stmt) == SQLITE_ROW) {
-        cout << "------------------------------------------------------------------------------------------\n";
-        cout << "Name: " << sqlite3_column_text(stmt, 0) << "\n";
-        cout << "Service: " << sqlite3_column_text(stmt, 1) << "\n";
-        cout << "Stylist: " << sqlite3_column_text(stmt, 2) << "\n";
-        cout << "Day: " << sqlite3_column_text(stmt, 3) << "\n";
-        cout << "Time: " << sqlite3_column_text(stmt, 4) << "\n";
-        cout << "Payment Method: " << sqlite3_column_text(stmt, 5) << "\n";
-        cout << "Amount Paid: " << sqlite3_column_int(stmt, 6) << "\n";
+        cout << "*----------------------------------------------------------------------------------------*\n";
+        cout << "*Name: " << sqlite3_column_text(stmt, 0) <<"\n";
+        cout << "*Service: " << sqlite3_column_text(stmt, 1) <<"\n";
+        cout << "*Stylist: " << sqlite3_column_text(stmt, 2) <<"\n";                                     
+        cout << "*Day: " << sqlite3_column_text(stmt, 3) <<"\n";
+        cout << "*Time: " << sqlite3_column_text(stmt, 4) <<"\n";
+        cout << "*Payment Method: " << sqlite3_column_text(stmt, 5) <<"\n";
+        cout << "*Amount Paid: " << sqlite3_column_int(stmt, 6) <<"\n";
     }
-    cout << "------------------------------------------------------------------------------------------\n";
-    cout << "End of weekly schedule.\n";
-
+    cout <<     "*-----------------------------------------------------------------------------------------*\n";
+    cout <<     "*                                End of Schedule List                                     *\n";
+    cout <<     "* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\n";
     sqlite3_finalize(stmt);
     sqlite3_close(DB);
     return 0;
