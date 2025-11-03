@@ -6,6 +6,7 @@ using namespace std;
 
 int createDB(const char* s);
 int createTable(const char* s);
+bool isSlotTaken(const char* s, const string& day, const string& time);
 int insertData(const char* s,
                string name,
                string service,

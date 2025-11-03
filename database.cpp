@@ -5,6 +5,7 @@ using namespace std;
 
 int createDB(const char* s);
 int createTable(const char* s);
+bool isSlotTaken(const char* s, const string& day, const string& time);
 int insertData(const char* s,
                string name,
                string service,
@@ -40,6 +41,29 @@ int createTable(const char* s) {
     sqlite3_close(DB);
     return exit;
 }
+
+bool isSlotTaken(const char* s, const string& day, const string& time) {
+    sqlite3* DB;
+    sqlite3_stmt* stmt;
+    int exit = sqlite3_open(s, &DB);
+    if (exit != SQLITE_OK) return true; // safety fallback
+
+    const char* sql = "SELECT COUNT(*) FROM Appointments WHERE DAY = ? AND TIME = ?;";
+    sqlite3_prepare_v2(DB, sql, -1, &stmt, nullptr);
+    sqlite3_bind_text(stmt, 1, day.c_str(), -1, SQLITE_TRANSIENT);
+    sqlite3_bind_text(stmt, 2, time.c_str(), -1, SQLITE_TRANSIENT);
+
+    bool taken = false;
+    if (sqlite3_step(stmt) == SQLITE_ROW) {
+        int count = sqlite3_column_int(stmt, 0);
+        taken = (count > 0);
+    }
+
+    sqlite3_finalize(stmt);
+    sqlite3_close(DB);
+    return taken;
+}
+
 int insertData(const char* s,
                string name,
                string service,

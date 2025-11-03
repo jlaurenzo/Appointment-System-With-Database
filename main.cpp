@@ -100,9 +100,9 @@ int  main() {
     cout << "*                                                                                         *\n";
     cout << "*                                                                                         *\n";
     cout << "*                                                                                         *\n";
-    cout << "*                                ------       -----------                                 *\n";
-    cout << "*                               | Hair |     | Treatments|                                *\n";
-    cout << "*                                ------       -----------                                 *\n";
+    cout << "*                               ------       ------------                                 *\n";
+    cout << "*                              | Hair |     | Treatments |                                *\n";
+    cout << "*                               ------       ------------                                 *\n";
     cout << "*                                                                                         *\n";
     cout << "*                                                                                         *\n";
     cout << "*                                                                                         *\n";
@@ -144,9 +144,9 @@ int  main() {
     cout << "*                                                                                         *\n";
     cout << "*                                                                                         *\n";
     cout << "*                                                                                         *\n";
-    cout << "*                                ------       -----------                                 *\n";
-    cout << "*                               | Hair |     | Treatments|                                *\n";
-    cout << "*                                ------       -----------                                 *\n";
+    cout << "*                               ------       ------------                                 *\n";
+    cout << "*                              | Hair |     | Treatments |                                *\n";
+    cout << "*                               ------       ------------                                 *\n";
     cout << "*                                                                                         *\n";
     cout << "*                                                                                         *\n";
     cout << "*                                                                                         *\n";
@@ -177,8 +177,8 @@ int  main() {
     cout << "*  |                                    P150 Kids                                       | *\n";
     cout << "*  |                                                                                    | *\n";
     cout << "*  |                                   Hair Styling                                     | *\n";
-    cout << "*  |                                    P500 Hair & Makeup                              | *\n";
-    cout << "*  |                                    P180 Shampoo & Blowdry                          | *\n";
+    cout << "*  |                                P500 Hair & Makeup                                  | *\n";
+    cout << "*  |                                P180 Shampoo & Blowdry                              | *\n";
     cout << "*  |                                                                                    | *\n";
     cout << "*  |                                                                                    | *\n";
     cout << "*  -------------------------------------------------------------------------------------  *\n";
@@ -209,22 +209,22 @@ int  main() {
                                 case 5: cout << "You selected Shampoo & Blowdry\n"; break;
                             }
         choice4 = -1;
-    cout << "* * * * * * * * * * *  * * * * * * * * * * * * * * * * * * * * * *  * * * * * * * * * * * *\n";
+    cout << "* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\n";
     cout << "*                                   ==================                                    *\n";
     cout << "*  < Back                              Hair Services                                      *\n";
     cout << "*                                   ==================                                    *\n";
-    cout << "*  -------------------------------------------------------------------------------------  *\n";
-    cout << "*  |                                   Hairstylists                                     | *\n";
-    cout << "*  |                                    Lourd Ryan Ramos                                | *\n";
+    cout << "*  -------------------------------------------------------------------------------------- *\n";
+    cout << "*  |                                  *Hairstylists*                                    | *\n";
+    cout << "*  |                                 Lourd Ryan Ramos                                   | *\n";
     cout << "*  |                                    Jing Monis                                      | *\n";
-    cout << "*  |                                    Alex Carbonell                                  | *\n";
-    cout << "*  |                                    Henri Calayag                                   | *\n";
+    cout << "*  |                                  Alex Carbonell                                    | *\n";
+    cout << "*  |                                   Henri Calayag                                    | *\n";
     cout << "*  |                                    Nelson Cruz                                     | *\n";
     cout << "*  |                                                                                    | *\n";
     cout << "*  |                                                                                    | *\n";
     cout << "*  |                                                                                    | *\n";
     cout << "*  |                                                                                    | *\n";
-    cout << "*  -------------------------------------------------------------------------------------  *\n";
+    cout << "*  -------------------------------------------------------------------------------------- *\n";
     cout << "* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\n";
     cout << "Press (1) for Lourd Ryan Ramos\n";
     cout << "Press (2) for Jing Monis\n";
@@ -333,8 +333,31 @@ int  main() {
                                 continue;
                             }
                     cout << "You selected schedule option " << choice6 << "\n";
-                                
+                    string day, time;
+                    if (choice5 == 1) day = "Monday";
+                    else if (choice5 == 2) day = "Tuesday";
+                    else if (choice5 == 3) day = "Wednesday";
+                    else if (choice5 == 4) day = "Thursday";
+                    else if (choice5 == 5) day = "Friday";
+                    else if (choice5 == 6) day = "Saturday";
+                    else if (choice5 == 7) day = "Sunday";
 
+                    if (choice6 == 1) time = "9:00am-9:45am";
+                    else if (choice6 == 2) time = "11:00am-11:45am";
+                    else if (choice6 == 3) time = "1:00pm-1:45pm";
+                    else if (choice6 == 4) time = "3:00pm-3:45pm";
+                    else if (choice6 == 5) time = "5:00pm-5:45pm";
+                    else if (choice6 == 6) time = "7:00pm-7:45pm";
+                    else if (choice6 == 7) time = "9:00pm-9:45pm";
+
+                    if (isSlotTaken(dbFile, day, time)) {
+                        cout << "\nSorry, the schedule for " << day << " at " << time << " is already booked.\n";
+                        cout << "Please select another time.\n";
+                        this_thread::sleep_for(chrono::milliseconds(2000));
+                        continue;
+                    }
+
+                    cout << "Slot is available!\n";
     printWordByWord("Proceeding to the selection of payment...", 30);
         choice7 = -1;
     cout << "* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\n";
@@ -662,11 +685,11 @@ int  main() {
     cout << "*  < Back                           Treatments Services                                   *\n";
     cout << "*                                   ===================                                   *\n";
     cout << "*  -------------------------------------------------------------------------------------  *\n";
-    cout << "*  |                                   Hairstylists                                     | *\n";
-    cout << "*  |                                    Lourd Ryan Ramos                                | *\n";
+    cout << "*  |                                  *Hairstylists*                                    | *\n";
+    cout << "*  |                                 Lourd Ryan Ramos                                   | *\n";
     cout << "*  |                                    Jing Monis                                      | *\n";
-    cout << "*  |                                    Alex Carbonell                                  | *\n";
-    cout << "*  |                                    Henri Calayag                                   | *\n";
+    cout << "*  |                                  Alex Carbonell                                    | *\n";
+    cout << "*  |                                   Henri Calayag                                    | *\n";
     cout << "*  |                                    Nelson Cruz                                     | *\n";
     cout << "*  |                                                                                    | *\n";
     cout << "*  |                                                                                    | *\n";
@@ -781,7 +804,31 @@ int  main() {
                                 continue;
                             }
                     cout << "You selected schedule option " << choice6 << "\n";
-                                
+                    string day, time;
+                    if (choice5 == 1) day = "Monday";
+                    else if (choice5 == 2) day = "Tuesday";
+                    else if (choice5 == 3) day = "Wednesday";
+                    else if (choice5 == 4) day = "Thursday";
+                    else if (choice5 == 5) day = "Friday";
+                    else if (choice5 == 6) day = "Saturday";
+                    else if (choice5 == 7) day = "Sunday";
+
+                    if (choice6 == 1) time = "9:00am-9:45am";
+                    else if (choice6 == 2) time = "11:00am-11:45am";
+                    else if (choice6 == 3) time = "1:00pm-1:45pm";
+                    else if (choice6 == 4) time = "3:00pm-3:45pm";
+                    else if (choice6 == 5) time = "5:00pm-5:45pm";
+                    else if (choice6 == 6) time = "7:00pm-7:45pm";
+                    else if (choice6 == 7) time = "9:00pm-9:45pm";
+
+                    if (isSlotTaken(dbFile, day, time)) {
+                        cout << "\nSorry, the schedule for " << day << " at " << time << " is already booked.\n";
+                        cout << "Please select another time.\n";
+                        this_thread::sleep_for(chrono::milliseconds(2000));
+                        continue;
+                    }
+
+                    cout << "Slot is available!\n";          
 
     printWordByWord("Proceeding to the selection of payment...", 30);
         choice7 = -1;
