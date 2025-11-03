@@ -42,16 +42,17 @@ int createTable(const char* s) {
     return exit;
 }
 
-bool isSlotTaken(const char* s, const string& day, const string& time) {
+bool isSlotTaken(const char* s, const string& day, const string& time, const string& stylist) {
     sqlite3* DB;
     sqlite3_stmt* stmt;
     int exit = sqlite3_open(s, &DB);
-    if (exit != SQLITE_OK) return true;
+    if (exit != SQLITE_OK) return true; // safety fallback
 
-    const char* sql = "SELECT COUNT(*) FROM Appointments WHERE DAY = ? AND TIME = ?;";
+    const char* sql = "SELECT COUNT(*) FROM Appointments WHERE DAY = ? AND TIME = ? AND STYLIST = ?;";
     sqlite3_prepare_v2(DB, sql, -1, &stmt, nullptr);
     sqlite3_bind_text(stmt, 1, day.c_str(), -1, SQLITE_TRANSIENT);
     sqlite3_bind_text(stmt, 2, time.c_str(), -1, SQLITE_TRANSIENT);
+    sqlite3_bind_text(stmt, 3, stylist.c_str(), -1, SQLITE_TRANSIENT);
 
     bool taken = false;
     if (sqlite3_step(stmt) == SQLITE_ROW) {
@@ -63,6 +64,7 @@ bool isSlotTaken(const char* s, const string& day, const string& time) {
     sqlite3_close(DB);
     return taken;
 }
+
 
 int insertData(const char* s,
                string name,

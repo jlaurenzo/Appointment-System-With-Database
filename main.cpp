@@ -333,31 +333,36 @@ int  main() {
                                 continue;
                             }
                     cout << "You selected schedule option " << choice6 << "\n";
-                    string day, time;
-                    if (choice5 == 1) day = "Monday";
-                    else if (choice5 == 2) day = "Tuesday";
-                    else if (choice5 == 3) day = "Wednesday";
-                    else if (choice5 == 4) day = "Thursday";
-                    else if (choice5 == 5) day = "Friday";
-                    else if (choice5 == 6) day = "Saturday";
-                    else if (choice5 == 7) day = "Sunday";
+                        string day, time, stylist;
+                        if (choice5 == 1) day = "Monday";
+                        else if (choice5 == 2) day = "Tuesday";
+                        else if (choice5 == 3) day = "Wednesday";
+                        else if (choice5 == 4) day = "Thursday";
+                        else if (choice5 == 5) day = "Friday";
+                        else if (choice5 == 6) day = "Saturday";
+                        else if (choice5 == 7) day = "Sunday";
 
-                    if (choice6 == 1) time = "9:00am-9:45am";
-                    else if (choice6 == 2) time = "11:00am-11:45am";
-                    else if (choice6 == 3) time = "1:00pm-1:45pm";
-                    else if (choice6 == 4) time = "3:00pm-3:45pm";
-                    else if (choice6 == 5) time = "5:00pm-5:45pm";
-                    else if (choice6 == 6) time = "7:00pm-7:45pm";
-                    else if (choice6 == 7) time = "9:00pm-9:45pm";
+                        if (choice6 == 1) time = "9:00am-9:45am";
+                        else if (choice6 == 2) time = "11:00am-11:45am";
+                        else if (choice6 == 3) time = "1:00pm-1:45pm";
+                        else if (choice6 == 4) time = "3:00pm-3:45pm";
+                        else if (choice6 == 5) time = "5:00pm-5:45pm";
+                        else if (choice6 == 6) time = "7:00pm-7:45pm";
+                        else if (choice6 == 7) time = "9:00pm-9:45pm";
 
-                    if (isSlotTaken(dbFile, day, time)) {
-                        cout << "\nSorry, the schedule for " << day << " at " << time << " is already booked.\n";
-                        cout << "Please select another time.\n";
-                        this_thread::sleep_for(chrono::milliseconds(2000));
-                        continue;
-                    }
+                        if (choice4 == 1) stylist = "Lourd Ryan Ramos";
+                        else if (choice4 == 2) stylist = "Jing Monis";
+                        else if (choice4 == 3) stylist = "Alex Carbonell";
+                        else if (choice4 == 4) stylist = "Henri Calayag";
+                        else if (choice4 == 5) stylist = "Nelson Cruz";
+                        if (isSlotTaken(dbFile, day, time, stylist)) {
+                            cout << "Sorry, " << stylist << " is already booked on " << day << " at " << time << ".\n";
+                            cout << "Please select another time or another stylist.\n";
+                            this_thread::sleep_for(chrono::milliseconds(1000));
+                            continue;
+    }
 
-                    cout << "Slot is available!\n";
+                    cout << "Schedule is available!\n";
     printWordByWord("Proceeding to the selection of payment...", 30);
         choice7 = -1;
     cout << "* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\n";
@@ -804,7 +809,7 @@ int  main() {
                                 continue;
                             }
                     cout << "You selected schedule option " << choice6 << "\n";
-                    string day, time;
+                    string day, time, stylist;
                     if (choice5 == 1) day = "Monday";
                     else if (choice5 == 2) day = "Tuesday";
                     else if (choice5 == 3) day = "Wednesday";
@@ -821,14 +826,19 @@ int  main() {
                     else if (choice6 == 6) time = "7:00pm-7:45pm";
                     else if (choice6 == 7) time = "9:00pm-9:45pm";
 
-                    if (isSlotTaken(dbFile, day, time)) {
-                        cout << "\nSorry, the schedule for " << day << " at " << time << " is already booked.\n";
-                        cout << "Please select another time.\n";
-                        this_thread::sleep_for(chrono::milliseconds(2000));
+                    if (choice4 == 1) stylist = "Lourd Ryan Ramos";
+                    else if (choice4 == 2) stylist = "Jing Monis";
+                    else if (choice4 == 3) stylist = "Alex Carbonell";
+                    else if (choice4 == 4) stylist = "Henri Calayag";
+                    else if (choice4 == 5) stylist = "Nelson Cruz";
+                    if (isSlotTaken(dbFile, day, time, stylist)) {
+                        cout << "Sorry, " << stylist << " is already booked on " << day << " at " << time << ".\n";
+                        cout << "Please select another time or another stylist.\n";
+                        this_thread::sleep_for(chrono::milliseconds(1000));
                         continue;
-                    }
+}
 
-                    cout << "Slot is available!\n";          
+                    cout << "Schedule is available!\n";          
 
     printWordByWord("Proceeding to the selection of payment...", 30);
         choice7 = -1;
