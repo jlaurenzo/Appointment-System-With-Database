@@ -16,6 +16,8 @@ int insertData(const char* s,
                int amountPaid);
 int displayAllAppointments(const char* s);
 
+
+
 int createDB(const char* s) {
     sqlite3* DB;
     int exit = sqlite3_open(s, &DB);
