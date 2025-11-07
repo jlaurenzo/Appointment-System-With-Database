@@ -5,7 +5,7 @@ using namespace std;
 
 int createDB(const char* s);
 int createTable(const char* s);
-bool isSlotTaken(const char* s, const string& day, const string& time);
+bool isSlotTaken(const char* s, const string& day, const string& time, const string& stylist);
 int insertData(const char* s,
                string name,
                string service,
@@ -25,7 +25,6 @@ int createDB(const char* s) {
 
 int createTable(const char* s) {
     sqlite3* DB;
-    char* messageError = nullptr;
     string sql = "CREATE TABLE IF NOT EXISTS Appointments("
                  "NO INTEGER PRIMARY KEY AUTOINCREMENT, "
                  "NAME TEXT NOT NULL, "
@@ -37,7 +36,7 @@ int createTable(const char* s) {
                  "AMOUNT_PAID INT NOT NULL);";
 
     int exit = sqlite3_open(s, &DB);
-    sqlite3_exec(DB, sql.c_str(), NULL, 0, &messageError);
+    sqlite3_exec(DB, sql.c_str(), nullptr, nullptr, nullptr);
     sqlite3_close(DB);
     return exit;
 }
@@ -45,8 +44,7 @@ int createTable(const char* s) {
 bool isSlotTaken(const char* s, const string& day, const string& time, const string& stylist) {
     sqlite3* DB;
     sqlite3_stmt* stmt;
-    int exit = sqlite3_open(s, &DB);
-    if (exit != SQLITE_OK) return true; // safety fallback
+    if (sqlite3_open(s, &DB) != SQLITE_OK) return true;
 
     const char* sql = "SELECT COUNT(*) FROM Appointments WHERE DAY = ? AND TIME = ? AND STYLIST = ?;";
     sqlite3_prepare_v2(DB, sql, -1, &stmt, nullptr);
@@ -55,16 +53,13 @@ bool isSlotTaken(const char* s, const string& day, const string& time, const str
     sqlite3_bind_text(stmt, 3, stylist.c_str(), -1, SQLITE_TRANSIENT);
 
     bool taken = false;
-    if (sqlite3_step(stmt) == SQLITE_ROW) {
-        int count = sqlite3_column_int(stmt, 0);
-        taken = (count > 0);
-    }
+    if (sqlite3_step(stmt) == SQLITE_ROW)
+        taken = (sqlite3_column_int(stmt, 0) > 0);
 
     sqlite3_finalize(stmt);
     sqlite3_close(DB);
     return taken;
 }
-
 
 int insertData(const char* s,
                string name,
@@ -76,16 +71,15 @@ int insertData(const char* s,
                int amountPaid)
 {
     sqlite3* DB;
-    char* messageError = nullptr;
-    int exit = sqlite3_open_v2(s, &DB, SQLITE_OPEN_READWRITE | SQLITE_OPEN_CREATE, NULL);
+    int exit = sqlite3_open_v2(s, &DB, SQLITE_OPEN_READWRITE | SQLITE_OPEN_CREATE, nullptr);
 
     string sql = "INSERT INTO Appointments (NAME, SERVICE, STYLIST, DAY, TIME, PAYMENT_METHOD, AMOUNT_PAID) VALUES('" +
                  name + "', '" + service + "', '" + stylist + "', '" + day + "', '" + time + "', '" + paymentMethod + "', " +
                  to_string(amountPaid) + ");";
 
-    sqlite3_exec(DB, "BEGIN TRANSACTION;", NULL, 0, NULL);
-    sqlite3_exec(DB, sql.c_str(), NULL, 0, &messageError);
-    sqlite3_exec(DB, "COMMIT;", NULL, 0, NULL);
+    sqlite3_exec(DB, "BEGIN TRANSACTION;", nullptr, nullptr, nullptr);
+    sqlite3_exec(DB, sql.c_str(), nullptr, nullptr, nullptr);
+    sqlite3_exec(DB, "COMMIT;", nullptr, nullptr, nullptr);
 
     sqlite3_close(DB);
     return exit;
@@ -120,5 +114,3 @@ int displayAllAppointments(const char* s) {
     sqlite3_close(DB);
     return 0;
 }
-
-
