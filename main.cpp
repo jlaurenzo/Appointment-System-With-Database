@@ -26,7 +26,7 @@ bool readInt(int & out) {
     return true;
 }
 
-void waitEnter(const string & msg = "Press Enter to go back...") {
+void waitEnter(const string & msg = "Input Enter to go back...") {
     cout << msg << flush;
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
     cin.get();
@@ -59,9 +59,10 @@ int  main() {
             cout << "*                                                                                         *\n";
             cout << "*                                                                                         *\n";
             cout << "* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\n";
-        cout << "Press (1) to View Scheduled Appointments\n";
-        cout << "Press (2) to Book an Appointment\n";
-        cout << "Press (3) to Exit\n";
+        cout << "Input (1) to View Scheduled Appointments\n";
+        cout << "Input (2) to Book an Appointment\n";
+        cout << "Input (3) to Reschedule an Appointment\n";
+        cout << "Input (4) to Exit\n";
         cout << "Enter your choice: ";
 
         int startChoice;
@@ -75,21 +76,30 @@ int  main() {
             displayAllAppointments(dbFile);
             waitEnter();
             continue;
-        } else if (startChoice == 2) {
+        } 
+        else if (startChoice == 2) {
             do {
                 cout << "Enter Your Full Name: ";
                 getline(cin >> ws, name);
             } while (name.empty());
             cout << "Welcome, " << name << "\n";
-            break;
-        } else if (startChoice == 3) {
+        } 
+        else if (startChoice == 3) {
+            string name;
+            cout << "Enter your full name to reschedule: ";
+            getline(cin >> ws, name);
+            rescheduleAppointment(dbFile, name);
+            waitEnter();
+            continue;
+        } 
+        else if (startChoice == 4) {
             cout << "Exiting program...\n";
             return 0;
-        } else {
+        } 
+        else {
             cout << "Invalid choice. Please try again.\n";
             continue;
         }
-    }
     
     cout << "* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\n";
     cout << "*                                   ==================                                    *\n";
@@ -111,9 +121,9 @@ int  main() {
     
     this_thread::sleep_for(chrono::milliseconds(300)); 
     printWordByWord("Select a service you want to appoint:", 30);
-    printWordByWord("Press (1) if you want to select Hair service", 30);
-    printWordByWord("Press (2) if you want to select Treatment service", 30);
-    printWordByWord("Press (3) if you want to exit", 30);
+    printWordByWord("Input (1) if you want to select Hair service", 30);
+    printWordByWord("Input (2) if you want to select Treatment service", 30);
+    printWordByWord("Input (3) if you want to exit", 30);
     cout << "Enter Your Choice: ";
         if (!readInt(choice)) {
             cout << "Invalid input. Type a number (1-5).\n";
@@ -152,8 +162,8 @@ int  main() {
     cout << "*                                                                                         *\n";
     cout << "*                                                                                         *\n";
     cout << "* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\n";
-    printWordByWord("Press (1) if you want to proceed in selection of service", 40);
-    printWordByWord("Press (0) if you want to go back and select other type of service", 40);
+    printWordByWord("Input (1) if you want to proceed in selection of service", 40);
+    printWordByWord("Input (0) if you want to go back and select other type of service", 40);
     cout << "Enter Your Choice: ";
         if (!readInt(choice2)) {
                     cout << "Invalid input.\n";
@@ -162,7 +172,6 @@ int  main() {
                 }
 
                 if (choice2 == 0) {
-                    // back to main menu
                     break;
             } else if (choice2 == 1) {    
             choice3 = -1;
@@ -183,12 +192,12 @@ int  main() {
     cout << "*  |                                                                                    | *\n";
     cout << "*  -------------------------------------------------------------------------------------  *\n";
     cout << "* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\n";
-    cout << "Press (1) for Men Haircut\n";
-    cout << "Press (2) for Women Haircut\n";
-    cout << "Press (3) for Kids Haircut\n";
-    cout << "Press (4) for Hair & Makeup\n";
-    cout << "Press (5) for Shampoo & Blowdry\n";
-    cout << "Press (0) to return to Hair menu\n";
+    cout << "Input (1) for Men Haircut\n";
+    cout << "Input (2) for Women Haircut\n";
+    cout << "Input (3) for Kids Haircut\n";
+    cout << "Input (4) for Hair & Makeup\n";
+    cout << "Input (5) for Shampoo & Blowdry\n";
+    cout << "Input (0) to return to Hair menu\n";
     cout << "Enter Your Choice: ";
     
     if (!readInt(choice3)) {
@@ -197,7 +206,6 @@ int  main() {
                         continue;
                     }
                     if (choice3 == 0) {
-                            // back to hair menu
                             continue;
                         }
                     if (choice3 >= 1 && choice3 <= 5) {
@@ -226,12 +234,12 @@ int  main() {
     cout << "*  |                                                                                    | *\n";
     cout << "*  -------------------------------------------------------------------------------------- *\n";
     cout << "* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\n";
-    cout << "Press (1) for Lourd Ryan Ramos\n";
-    cout << "Press (2) for Jing Monis\n";
-    cout << "Press (3) for Alex Carbonell\n";
-    cout << "Press (4) for Henri Calayag\n";
-    cout << "Press (5) for Nelson Cruz\n";
-    cout << "Press (0) to return to Hair menu\n";
+    cout << "Input (1) for Lourd Ryan Ramos\n";
+    cout << "Input (2) for Jing Monis\n";
+    cout << "Input (3) for Alex Carbonell\n";
+    cout << "Input (4) for Henri Calayag\n";
+    cout << "Input (5) for Nelson Cruz\n";
+    cout << "Input (0) to return to Hair menu\n";
     cout << "Enter Your Choice: ";
     if (!readInt(choice4)) {
                         cout << "Invalid input. Returning to Hair menu...\n";
@@ -253,39 +261,36 @@ int  main() {
                             }
     printWordByWord("Proceeding to the selection of schedules...", 30);
     choice5 = -1;
-    cout << "* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\n";
+    cout << "* * * * * * * * * * *  * * * * * * * * * * * * * * * * * * * * * *  * * * * * * * * * * * *\n";
     cout << "*                                   ==================                                    *\n";
     cout << "*  < Back                              Hair Services                                      *\n";
     cout << "*                                   ==================                                    *\n";
     cout << "*                                       *Schedule*                                        *\n";
-    cout << "*                                   ------------------                                    *\n";
-    cout << "*                                  |  Monday          |                                   *\n";
-    cout << "*                                  |  Tuesday         |                                   *\n";
-    cout << "*                                  |  Wednesday       |                                   *\n";
-    cout << "*                                  |  Thursday        |                                   *\n";
-    cout << "*                                  |  Friday          |                                   *\n";
-    cout << "*                                  |  Saturday        |                                   *\n";
-    cout << "*                                  |  Sunday          |                                   *\n";
-    cout << "*                                   ------------------                                    *\n";
+    cout << "*        ----------------------------------------------------------------------           *\n";
+    cout << "*       | Sunday | Monday | Tuesday | Wednesday | Thursday | Friday | Saturday |          *\n";
+    cout << "*        ----------------------------------------------------------------------           *\n";
+    cout << "*       |   1    |   2    |    3    |     4     |    5     |   6    |    7     |          *\n";
+    cout << "*        ----------------------------------------------------------------------           *\n";
+    cout << "*       |   8    |   9    |    10   |     11    |    12    |  13    |    14    |          *\n";
+    cout << "*        ----------------------------------------------------------------------           *\n";
+    cout << "*       |   15   |   16   |    17   |     18    |    19    |  20    |    21    |          *\n";
+    cout << "*        ----------------------------------------------------------------------           *\n";
+    cout << "*       |   22   |   23   |    24   |     25    |    26    |  27    |    28    |          *\n";
+    cout << "*        ----------------------------------------------------------------------           *\n";
+    cout << "*       |   29   |   30   |    31   |           |          |        |          |          *\n";
+    cout << "*        ----------------------------------------------------------------------           *\n";
     cout << "*                                                                                         *\n";
     cout << "*                                                                                         *\n";
-    cout << "* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\n";
-    cout << "Press (1) for Monday\n";
-    cout << "Press (2) for Tuesday\n";
-    cout << "Press (3) for Wednesday\n";
-    cout << "Press (4) for Thursday\n";
-    cout << "Press (5) for Friday\n";
-    cout << "Press (6) for Saturday\n";
-    cout << "Press (7) for Sunday\n";
-    cout << "Press (0) to return to Hair menu\n";
-    cout << "Enter Your Choice: ";
+    cout << "* * * * * * * * * * * * * * * *  * * * * * * * * * * * * * * * * * * * * * *  * * * * * * *\n";
+    cout << "Input (0) to return to Hair menu\n";
+    cout << "Enter the day you prefer: ";
     if (!readInt(choice5)) {
                         cout << "Invalid input. Returning to Hair menu...\n";
                         this_thread::sleep_for(chrono::milliseconds(600));
                         continue;
                     }
                     if (choice5 == 0) continue;
-                            if (choice5 < 1 || choice5 > 7) {
+                            if (choice5 < 1 || choice5 > 31) {
                                 cout << "Invalid schedule option\n";
                                 waitEnter();
                                 continue;
@@ -312,14 +317,14 @@ int  main() {
     cout << "*                                                                                         *\n";
     cout << "*                                                                                         *\n";
     cout << "* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\n";
-    cout << "Press (1) for 9:00am-9:45am\n";
-    cout << "Press (2) for 11:00am-11:45am\n";
-    cout << "Press (3) for 1:00pm-1:45pm\n";
-    cout << "Press (4) for 3:00pm-3:45pm\n";
-    cout << "Press (5) for 5:00pm-5:45pm\n";
-    cout << "Press (6) for 7:00pm-7:45pm\n";
-    cout << "Press (7) for 9:00pm-9:45pm\n";
-    cout << "Press (0) to return to Hair menu\n";
+    cout << "Input (1) for 9:00am-9:45am\n";
+    cout << "Input (2) for 11:00am-11:45am\n";
+    cout << "Input (3) for 1:00pm-1:45pm\n";
+    cout << "Input (4) for 3:00pm-3:45pm\n";
+    cout << "Input (5) for 5:00pm-5:45pm\n";
+    cout << "Input (6) for 7:00pm-7:45pm\n";
+    cout << "Input (7) for 9:00pm-9:45pm\n";
+    cout << "Input (0) to return to Hair menu\n";
     cout << "Enter Your Choice: ";
     if (!readInt(choice6)) {
                         cout << "Invalid input. Returning to Hair menu...\n";
@@ -334,13 +339,15 @@ int  main() {
                             }
                     cout << "You selected schedule option " << choice6 << "\n";
                         string day, time, stylist;
-                        if (choice5 == 1) day = "Monday";
-                        else if (choice5 == 2) day = "Tuesday";
-                        else if (choice5 == 3) day = "Wednesday";
-                        else if (choice5 == 4) day = "Thursday";
-                        else if (choice5 == 5) day = "Friday";
-                        else if (choice5 == 6) day = "Saturday";
-                        else if (choice5 == 7) day = "Sunday";
+                        int date = choice5;
+                         int dayofweek = choice5 % 7;
+                        if (dayofweek == 1) day = "Sunday";
+                        else if (dayofweek == 2) day = "Monday";
+                        else if (dayofweek == 3) day = "Tuesday";
+                        else if (dayofweek == 4) day = "Wednesday";
+                        else if (dayofweek == 5) day = "Thursday";
+                        else if (dayofweek == 6) day = "Friday";
+                        else if (dayofweek == 0) day = "Saturday";
 
                         if (choice6 == 1) time = "9:00am-9:45am";
                         else if (choice6 == 2) time = "11:00am-11:45am";
@@ -355,8 +362,8 @@ int  main() {
                         else if (choice4 == 3) stylist = "Alex Carbonell";
                         else if (choice4 == 4) stylist = "Henri Calayag";
                         else if (choice4 == 5) stylist = "Nelson Cruz";
-                        if (isSlotTaken(dbFile, day, time, stylist)) {
-                            cout << "Sorry, " << stylist << " is already booked on " << day << " at " << time << ".\n";
+                        if (isSlotTaken(dbFile, day, time, stylist, date)) {
+                            cout << "Sorry, " << stylist << " is already booked on " << date <<" "<< day << " at " << time << ".\n";
                             cout << "Please select another time or another stylist.\n";
                             this_thread::sleep_for(chrono::milliseconds(1000));
                             continue;
@@ -364,8 +371,8 @@ int  main() {
 
                     cout << "Schedule is available!\n";
     printWordByWord("Proceeding to the selection of payment...", 30);
-        choice7 = -1;
-    cout << "* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\n";
+         choice7 = -1;
+    cout << "* * * * * * * * * * *  * * * * * * * * * * * * * * * * * * * * * *  * * * * * * * * * * * *\n";
     cout << "*                                   ==================                                    *\n";
     cout << "*  < Back                              Hair Services                                      *\n";
     cout << "*                                   ==================                                    *\n";
@@ -378,18 +385,20 @@ int  main() {
     cout << "*                                  |  BDO             |                                   *\n";
     cout << "*                                  |  BPI             |                                   *\n";
     cout << "*                                  |  PayMaya         |                                   *\n";
+    cout << "*                                  |  Walk-in Payment |                                   *\n";
     cout << "*                                   ------------------                                    *\n";
     cout << "*                                                                                         *\n";
     cout << "*                                                                                         *\n";
-    cout << "* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\n";
-    cout << "Press (1) for Gcash\n";
-    cout << "Press (2) for QR PH\n";
-    cout << "Press (3) for MasterCard\n";
-    cout << "Press (4) for Gotyme\n";
-    cout << "Press (5) for BDO\n";
-    cout << "Press (6) for BPI\n";
-    cout << "Press (7) for PayMaya\n";
-    cout << "Press (0) to return to Hair menu\n";
+    cout << "* * * * * * * * * * * * * * * *  * * * * * * * * * * * * * * * * * * * * * *  * * * * * * *\n";
+    cout << "Input (1) for Gcash\n";
+    cout << "Input (2) for QR PH\n";
+    cout << "Input (3) for MasterCard\n";
+    cout << "Input (4) for Gotyme\n";
+    cout << "Input (5) for BDO\n";
+    cout << "Input (6) for BPI\n";
+    cout << "Input (7) for PayMaya\n";
+    cout << "Input (8) for Walk-in Payment\n";
+    cout << "Input (0) to return to Hair menu\n";
     cout << "Enter Your Choice: ";
     if (!readInt(choice7)) {
                         cout << "Invalid input. Returning to Hair menu...\n";
@@ -397,7 +406,7 @@ int  main() {
                         continue;
                     }
                      if (choice7 == 0) continue;
-                            if (choice7 < 1 || choice7 > 7) {
+                            if (choice7 < 1 || choice7 > 8) {
                                 cout << "Invalid payment option\n";
                                 waitEnter();
                                 continue;
@@ -406,7 +415,7 @@ int  main() {
 
     printWordByWord("Proceeding to the confirmation of the options you have selected...", 30);
     choice8 = -1;
-    cout << "* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\n";
+    cout << "* * * * * * * * * * *  * * * * * * * * * * * * * * * * * * * * * *  * * * * * * * * * * * *\n";
     cout << "*                                   ==================                                    *\n";
     cout << "*  < Back                              Hair Services                                      *\n";
     cout << "*                                   ==================                                    *\n";
@@ -432,20 +441,75 @@ int  main() {
     cout << "*                                    Henri Calayag                                        *\n";
     } else if (choice4 == 5) {
     cout << "*                                    Nelson Cruz                                          *\n";}
-    if (choice5 == 1) {
-    cout << "*                                    Monday                                               *\n";
-    } else if (choice5 == 2) {
-    cout << "*                                    Tuesday                                              *\n";
-    } else if (choice5 == 3) {
-    cout << "*                                    Wednesday                                            *\n";
-    } else if (choice5 == 4) {
-    cout << "*                                    Thursday                                             *\n";
-    } else if (choice5 == 5) {
-    cout << "*                                    Friday                                               *\n";
-    } else if (choice5 == 6) {
-    cout << "*                                    Saturday                                             *\n";
-    } else if (choice5 == 7) {
-    cout << "*                                    Sunday                                               *\n"; }
+    if (choice5 == 2 || choice5 == 9 || choice5 == 16 || choice5 == 23 || choice5 == 30) {
+        if (choice5 == 2)
+    cout << "*                                    Monday 2nd                                           *\n";
+        else if (choice5 == 9)
+    cout << "*                                    Monday 9th                                           *\n";
+        else if (choice5 == 16)
+    cout << "*                                    Monday 16th                                          *\n";
+        else if (choice5 == 23)
+    cout << "*                                    Monday 23rd                                          *\n";
+        else if (choice5 == 30)
+    cout << "*                                    Monday 30th                                          *\n"; 
+    } else if (choice5 == 3 || choice5 == 10 || choice5 == 17 || choice5 == 24 || choice5 == 31) {
+    if (choice5 == 3)
+    cout << "*                                    Tuesday 3rd                                          *\n";
+        else if (choice5 == 10)
+    cout << "*                                    Tuesday 10th                                         *\n";
+        else if (choice5 == 17)
+    cout << "*                                    Tuesday 17th                                         *\n";
+        else if (choice5 == 24)
+    cout << "*                                    Tuesday 24th                                         *\n";
+        else if (choice5 == 31)
+    cout << "*                                    Tuesday 31st                                         *\n";
+    } else if (choice5 == 4 || choice5 == 11 || choice5 == 18 || choice5 == 25) {
+    if (choice5 == 4)
+    cout << "*                                    Wednesday 4th                                        *\n";
+        else if (choice5 == 11)
+    cout << "*                                    Wednesday 11th                                       *\n";
+        else if (choice5 == 18)
+    cout << "*                                    Wednesday 18th                                       *\n";
+        else if (choice5 == 25)
+    cout << "*                                    Wednesday 25th                                       *\n";
+    } else if (choice5 == 5 || choice5 == 12 || choice5 == 19 || choice5 == 26) {
+    if (choice5 == 5)
+    cout << "*                                    Thursday 5th                                         *\n";
+        else if (choice5 == 12)
+    cout << "*                                    Thursday 12th                                        *\n";
+        else if (choice5 == 19)
+    cout << "*                                    Thursday 19th                                        *\n";
+        else if (choice5 == 26)
+    cout << "*                                    Thursday 26th                                        *\n";
+    } else if (choice5 == 6 || choice5 == 13 || choice5 == 20 || choice5 == 27) {
+    if (choice5 == 6)
+    cout << "*                                    Friday 6th                                           *\n";
+        else if (choice5 == 13)
+    cout << "*                                    Friday 13th                                          *\n";
+        else if (choice5 == 20)
+    cout << "*                                    Friday 20th                                          *\n";
+        else if (choice5 == 27)
+    cout << "*                                    Friday 27th                                          *\n";
+    } else if (choice5 == 7 || choice5 == 14 || choice5 == 21 || choice5 == 28) {
+    if (choice5 == 7)
+    cout << "*                                    Saturday 7th                                         *\n";
+        else if (choice5 == 14)
+    cout << "*                                    Saturday 14th                                        *\n";
+        else if (choice5 == 21)
+    cout << "*                                    Saturday 21st                                        *\n";
+        else if (choice5 == 28)
+    cout << "*                                    Saturday 28th                                        *\n";
+    } else if (choice5 == 1 || choice5 == 8 || choice5 == 15 || choice5 == 22 || choice5 == 29) {
+    if (choice5 == 1)
+    cout << "*                                    Sunday 1st                                           *\n";
+        else if (choice5 == 8)
+    cout << "*                                    Sunday 8th                                           *\n";
+        else if (choice5 == 15)
+    cout << "*                                    Sunday 15th                                          *\n";
+        else if (choice5 == 22)
+    cout << "*                                    Sunday 22nd                                          *\n";
+        else if (choice5 == 29)
+    cout << "*                                    Sunday 29th                                          *\n"; }
     if (choice6 == 1) {
     cout << "*                                    9:00am-9:45am                                        *\n";
     } else if (choice6 == 2) {
@@ -463,23 +527,25 @@ int  main() {
     if (choice7 == 1) {
     cout << "*                                    Gcash                                                *\n";
     } else if (choice7 == 2) {
-    cout << "*                                    QR PH                                                 *\n";
+    cout << "*                                    QR PH                                                *\n";
     } else if (choice7 == 3) {
     cout << "*                                    MasterCard                                           *\n";
     } else if (choice7 == 4) {
     cout << "*                                    ApplyPay                                             *\n";
     } else if (choice7 == 5) {
-    cout << "*                                    BDO                                     *\n";
+    cout << "*                                   BDO                                                  *\n";
     } else if (choice7 == 6) {
-    cout << "*                                    BPI                                               *\n";
+    cout << "*                                   BPI                                                  *\n";
     } else if (choice7 == 7) {
-    cout << "*                                    PayMaya                                              *\n";
+    cout << "*                                   PayMaya                                              *\n";
+    } else if (choice7 == 8) {
+    cout << "*                                   Walk-in Payment                                      *\n";   
     }
     cout << "*                                                                                         *\n";
     cout << "*                                                                                         *\n";
-    cout << "* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\n";
-    printWordByWord("Press (1) if there is no changes needed to be done", 40);
-    printWordByWord("Press (0) if you want to go back and repeat the choices", 40);
+    cout << "* * * * * * * * * * * * * * * *  * * * * * * * * * * * * * * * * * * * * * *  * * * * * * *\n";
+    printWordByWord("Input (1) if there is no changes needed to be done", 40);
+    printWordByWord("Input (0) if you want to go back and repeat the choices", 40);
     cout << "Enter Your Choice: ";
         if (!readInt(choice8)) {
                     cout << "Invalid input.\n";
@@ -488,9 +554,11 @@ int  main() {
                 }
 
                 if (choice8 == 0) {
-                    // back to main menu
                     break;
-                } else if (choice8 == 1) {
+                } else if (choice7 == 8 && choice8 == 1) { 
+                cout << "Successfully booked, thank you!\n"; 
+                break; }
+                    else if (choice8 == 1) {
     printWordByWord("Proceeding to the payment transaction...", 30);
     do {                    
         choice9 = -1;
@@ -532,7 +600,6 @@ int  main() {
 
                                 if (ok) {
                                     cout << "Successfully paid, Thank you!\n";
-                                    // Dito mag save yung appointmenttt!!
                                     string service, stylist, day, time, payment;
 
                                     if (choice == 1) {
@@ -557,14 +624,16 @@ int  main() {
                                     else if (choice4 == 4) stylist = "Henri Calayag";
                                     else if (choice4 == 5) stylist = "Nelson Cruz";
 
-                                    if (choice5 == 1) day = "Monday";
-                                    else if (choice5 == 2) day = "Tuesday";
-                                    else if (choice5 == 3) day = "Wednesday";
-                                    else if (choice5 == 4) day = "Thursday";
-                                    else if (choice5 == 5) day = "Friday";
-                                    else if (choice5 == 6) day = "Saturday";
-                                    else if (choice5 == 7) day = "Sunday";
-
+                                    int date = choice5;
+                                    int dayofweek = choice5 % 7;
+                                    if (dayofweek == 1) day = "Sunday";
+                                    else if (dayofweek == 2) day = "Monday";
+                                    else if (dayofweek == 3) day = "Tuesday";
+                                    else if (dayofweek == 4) day = "Wednesday";
+                                    else if (dayofweek == 5) day = "Thursday";
+                                    else if (dayofweek == 6) day = "Friday";
+                                    else if (dayofweek == 0) day = "Saturday";
+                                    
                                     if (choice6 == 1) time = "9:00am-9:45am";
                                     else if (choice6 == 2) time = "11:00am-11:45am";
                                     else if (choice6 == 3) time = "1:00pm-1:45pm";
@@ -572,7 +641,7 @@ int  main() {
                                     else if (choice6 == 5) time = "5:00pm-5:45pm";
                                     else if (choice6 == 6) time = "7:00pm-7:45pm";
                                     else if (choice6 == 7) time = "9:00pm-9:45pm";
-
+                                    
                                     if (choice7 == 1) payment = "Gcash";
                                     else if (choice7 == 2) payment = "QR PH";
                                     else if (choice7 == 3) payment = "MasterCard";
@@ -580,9 +649,10 @@ int  main() {
                                     else if (choice7 == 5) payment = "BDO";
                                     else if (choice7 == 6) payment = "BPI";
                                     else if (choice7 == 7) payment = "PayMaya";
-                                    string schedule = day + " " + time;
+                                    else if (choice7 == 8) payment = "Walk-in Payment";
+                                    string schedule = date + " " + day + " " + time;
 
-                                    insertData(dbFile, name, service, stylist, day, time, payment, choice9);
+                                    insertData(dbFile, name, service, stylist, day, date, time, payment, choice9);
 
                                     break;
                                 } else {
@@ -602,7 +672,7 @@ int  main() {
                 }
             }
                 continue;
-            } // end of case 1
+            }
     
     case 2: {
         choice2 = -1;
@@ -624,8 +694,8 @@ int  main() {
     cout << "*                                                                                         *\n";
     cout << "*                                                                                         *\n";
     cout << "* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\n";
-    printWordByWord("Press (1) if you want to proceed in selection of service", 50);
-    printWordByWord("Press (0) if you want to go back and select other type of service", 50);
+    printWordByWord("Input (1) if you want to proceed in selection of service", 50);
+    printWordByWord("Input (0) if you want to go back and select other type of service", 50);
     cout << "Enter Your Choice: ";
         if (!readInt(choice2)) {
                     cout << "Invalid input.\n";
@@ -655,14 +725,14 @@ int  main() {
     cout << "*  |                                                                                    | *\n";
     cout << "*  -------------------------------------------------------------------------------------  *\n";
     cout << "* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\n";
-    cout << "Press (1) for Hot Oil/Hair Spa\n";
-    cout << "Press (2) for Cynos with Creme\n";
-    cout << "Press (3) for Scalp Treatment\n";
-    cout << "Press (4) for Rebonding\n";
-    cout << "Press (5) for Japanese Rebonding\n";
-    cout << "Press (6) for Hair Color Change\n";
-    cout << "Press (7) for Keratin Treatment\n";
-    cout << "Press (0) to return to Hair menu\n";
+    cout << "Input (1) for Hot Oil/Hair Spa\n";
+    cout << "Input (2) for Cynos with Creme\n";
+    cout << "Input (3) for Scalp Treatment\n";
+    cout << "Input (4) for Rebonding\n";
+    cout << "Input (5) for Japanese Rebonding\n";
+    cout << "Input (6) for Hair Color Change\n";
+    cout << "Input (7) for Keratin Treatment\n";
+    cout << "Input (0) to return to Hair menu\n";
     cout << "Enter Your Choice: ";
     
     if (!readInt(choice3)) {
@@ -671,7 +741,6 @@ int  main() {
                         continue;
                     }
                     if (choice3 == 0) {
-                            // back to hair menu
                             continue;
                         }
                     if (choice3 >= 1 && choice3 <= 7) {
@@ -702,12 +771,12 @@ int  main() {
     cout << "*  |                                                                                    | *\n";
     cout << "*  -------------------------------------------------------------------------------------  *\n";
     cout << "* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\n";
-    cout << "Press (1) for Lourd Ryan Ramos\n";
-    cout << "Press (2) for Jing Monis\n";
-    cout << "Press (3) for Alex Carbonell\n";
-    cout << "Press (4) for Henri Calayag\n";
-    cout << "Press (5) for Nelson Cruz\n";
-    cout << "Press (0) to return to Hair menu\n";
+    cout << "Input (1) for Lourd Ryan Ramos\n";
+    cout << "Input (2) for Jing Monis\n";
+    cout << "Input (3) for Alex Carbonell\n";
+    cout << "Input (4) for Henri Calayag\n";
+    cout << "Input (5) for Nelson Cruz\n";
+    cout << "Input (0) to return to Hair menu\n";
     cout << "Enter Your Choice: ";
     if (!readInt(choice4)) {
                         cout << "Invalid input. Returning to Hair menu...\n";
@@ -729,39 +798,36 @@ int  main() {
                             }
     printWordByWord("Proceeding to the selection of schedules...", 30);
     choice5 = -1;
-    cout << "* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\n";
+    cout << "* * * * * * * * * * *  * * * * * * * * * * * * * * * * * * * * * *  * * * * * * * * * * * *\n";
     cout << "*                                   ==================                                    *\n";
     cout << "*  < Back                              Hair Services                                      *\n";
     cout << "*                                   ==================                                    *\n";
     cout << "*                                       *Schedule*                                        *\n";
-    cout << "*                                   ------------------                                    *\n";
-    cout << "*                                  |  Monday          |                                   *\n";
-    cout << "*                                  |  Tuesday         |                                   *\n";
-    cout << "*                                  |  Wednesday       |                                   *\n";
-    cout << "*                                  |  Thursday        |                                   *\n";
-    cout << "*                                  |  Friday          |                                   *\n";
-    cout << "*                                  |  Saturday        |                                   *\n";
-    cout << "*                                  |  Sunday          |                                   *\n";
-    cout << "*                                   ------------------                                    *\n";
+    cout << "*        ----------------------------------------------------------------------           *\n";
+    cout << "*       | Sunday | Monday | Tuesday | Wednesday | Thursday | Friday | Saturday |          *\n";
+    cout << "*        ----------------------------------------------------------------------           *\n";
+    cout << "*       |   1    |   2    |    3    |     4     |    5     |   6    |    7     |          *\n";
+    cout << "*        ----------------------------------------------------------------------           *\n";
+    cout << "*       |   8    |   9    |    10   |     11    |    12    |  13    |    14    |          *\n";
+    cout << "*        ----------------------------------------------------------------------           *\n";
+    cout << "*       |   15   |   16   |    17   |     18    |    19    |  20    |    21    |          *\n";
+    cout << "*        ----------------------------------------------------------------------           *\n";
+    cout << "*       |   22   |   23   |    24   |     25    |    26    |  27    |    28    |          *\n";
+    cout << "*        ----------------------------------------------------------------------           *\n";
+    cout << "*       |   29   |   30   |    31   |           |          |        |          |          *\n";
+    cout << "*        ----------------------------------------------------------------------           *\n";
     cout << "*                                                                                         *\n";
     cout << "*                                                                                         *\n";
-    cout << "* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\n";
-    cout << "Press (1) for Monday\n";
-    cout << "Press (2) for Tuesday\n";
-    cout << "Press (3) for Wednesday\n";
-    cout << "Press (4) for Thursday\n";
-    cout << "Press (5) for Friday\n";
-    cout << "Press (6) for Saturday\n";
-    cout << "Press (7) for Sunday\n";
-    cout << "Press (0) to return to Hair menu\n";
-    cout << "Enter Your Choice: ";
+    cout << "* * * * * * * * * * * * * * * *  * * * * * * * * * * * * * * * * * * * * * *  * * * * * * *\n";
+    cout << "Input (0) to return to Hair menu\n";
+    cout << "Enter the day you prefer: ";
     if (!readInt(choice5)) {
                         cout << "Invalid input. Returning to Hair menu...\n";
                         this_thread::sleep_for(chrono::milliseconds(600));
                         continue;
                     }
                     if (choice5 == 0) continue;
-                            if (choice5 < 1 || choice5 > 7) {
+                            if (choice5 < 1 || choice5 > 31) {
                                 cout << "Invalid schedule option\n";
                                 waitEnter();
                                 continue;
@@ -788,14 +854,14 @@ int  main() {
     cout << "*                                                                                         *\n";
     cout << "*                                                                                         *\n";
     cout << "* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\n";
-    cout << "Press (1) for 9:00am-9:45am\n";
-    cout << "Press (2) for 11:00am-11:45am\n";
-    cout << "Press (3) for 1:00pm-1:45pm\n";
-    cout << "Press (4) for 3:00pm-3:45pm\n";
-    cout << "Press (5) for 5:00pm-5:45pm\n";
-    cout << "Press (6) for 7:00pm-7:45pm\n";
-    cout << "Press (7) for 9:00pm-9:45pm\n";
-    cout << "Press (0) to return to Hair menu\n";
+    cout << "Input (1) for 9:00am-9:45am\n";
+    cout << "Input (2) for 11:00am-11:45am\n";
+    cout << "Input (3) for 1:00pm-1:45pm\n";
+    cout << "Input (4) for 3:00pm-3:45pm\n";
+    cout << "Input (5) for 5:00pm-5:45pm\n";
+    cout << "Input (6) for 7:00pm-7:45pm\n";
+    cout << "Input (7) for 9:00pm-9:45pm\n";
+    cout << "Input (0) to return to Hair menu\n";
     cout << "Enter Your Choice: ";
     if (!readInt(choice6)) {
                         cout << "Invalid input. Returning to Hair menu...\n";
@@ -810,13 +876,16 @@ int  main() {
                             }
                     cout << "You selected schedule option " << choice6 << "\n";
                     string day, time, stylist;
-                    if (choice5 == 1) day = "Monday";
-                    else if (choice5 == 2) day = "Tuesday";
-                    else if (choice5 == 3) day = "Wednesday";
-                    else if (choice5 == 4) day = "Thursday";
-                    else if (choice5 == 5) day = "Friday";
-                    else if (choice5 == 6) day = "Saturday";
-                    else if (choice5 == 7) day = "Sunday";
+                    int date = choice5;
+                    int dayofweek = choice5 % 7;
+
+                    if (dayofweek == 1) day = "Sunday";
+                    else if (dayofweek == 2) day = "Monday";
+                    else if (dayofweek == 3) day = "Tuesday";
+                    else if (dayofweek == 4) day = "Wednesday";
+                    else if (dayofweek == 5) day = "Thursday";
+                    else if (dayofweek == 6) day = "Friday";
+                    else if (dayofweek == 0) day = "Saturday";
 
                     if (choice6 == 1) time = "9:00am-9:45am";
                     else if (choice6 == 2) time = "11:00am-11:45am";
@@ -831,8 +900,8 @@ int  main() {
                     else if (choice4 == 3) stylist = "Alex Carbonell";
                     else if (choice4 == 4) stylist = "Henri Calayag";
                     else if (choice4 == 5) stylist = "Nelson Cruz";
-                    if (isSlotTaken(dbFile, day, time, stylist)) {
-                        cout << "Sorry, " << stylist << " is already booked on " << day << " at " << time << ".\n";
+                    if (isSlotTaken(dbFile, day, time, stylist, date)) {
+                        cout << "Sorry, " << stylist << " is already booked on " << date <<" "<< day << " at " << time << ".\n";
                         cout << "Please select another time or another stylist.\n";
                         this_thread::sleep_for(chrono::milliseconds(1000));
                         continue;
@@ -841,8 +910,9 @@ int  main() {
                     cout << "Schedule is available!\n";          
 
     printWordByWord("Proceeding to the selection of payment...", 30);
+        
         choice7 = -1;
-    cout << "* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\n";
+    cout << "* * * * * * * * * * *  * * * * * * * * * * * * * * * * * * * * * *  * * * * * * * * * * * *\n";
     cout << "*                                   ===================                                   *\n";
     cout << "*  < Back                           Treatments Services                                   *\n";
     cout << "*                                   ===================                                   *\n";
@@ -855,18 +925,20 @@ int  main() {
     cout << "*                                  |  BDO             |                                   *\n";
     cout << "*                                  |  BPI             |                                   *\n";
     cout << "*                                  |  PayMaya         |                                   *\n";
+    cout << "*                                  |  Walk-in Payment |                                   *\n";
     cout << "*                                   ------------------                                    *\n";
     cout << "*                                                                                         *\n";
     cout << "*                                                                                         *\n";
-    cout << "* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\n";
-    cout << "Press (1) for Gcash\n";
-    cout << "Press (2) for QR PH\n";
-    cout << "Press (3) for MasterCard\n";
-    cout << "Press (4) for Gotyme\n";
-    cout << "Press (5) for BDO\n";
-    cout << "Press (6) for BPI\n";
-    cout << "Press (7) for PayMaya\n";
-    cout << "Press (0) to return to Hair menu\n";
+    cout << "* * * * * * * * * * * * * * * *  * * * * * * * * * * * * * * * * * * * * * *  * * * * * * *\n";
+    cout << "Input (1) for Gcash\n";
+    cout << "Input (2) for QR PH\n";
+    cout << "Input (3) for MasterCard\n";
+    cout << "Input (4) for Gotyme\n";
+    cout << "Input (5) for BDO\n";
+    cout << "Input (6) for BPI\n";
+    cout << "Input (7) for PayMaya\n";
+    cout << "Input (8) for Walk-in Payment\n";
+    cout << "Input (0) to return to Hair menu\n";
     cout << "Enter Your Choice: ";
     if (!readInt(choice7)) {
                         cout << "Invalid input. Returning to Hair menu...\n";
@@ -874,34 +946,31 @@ int  main() {
                         continue;
                     }
                      if (choice7 == 0) continue;
-                            if (choice7 < 1 || choice7 > 7) {
+                            if (choice7 < 1 || choice7 > 8) {
                                 cout << "Invalid payment option\n";
                                 waitEnter();
                                 continue;
                             }
                    cout << "You selected payment option " << choice7 << "\n";
+
     printWordByWord("Proceeding to the confirmation of the options you have selected...", 30);
 choice8 = -1;
-    cout << "* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\n";
+     cout << "* * * * * * * * * * *  * * * * * * * * * * * * * * * * * * * * * *  * * * * * * * * * * * *\n";
     cout << "*                                   ==================                                    *\n";
     cout << "*  < Back                              Hair Services                                      *\n";
     cout << "*                                   ==================                                    *\n";
     cout << "*                                                                                         *\n";
     cout << "*                                Options you've selected:                                 *\n";
     if (choice3 == 1) {
-    cout << "*                                    P500 Hot Oil/Hair Spa                                *\n";
+    cout << "*                                    P250 Men                                             *\n";
     } else if (choice3 == 2) {
-    cout << "*                                    P800 Cynos with Creme                                *\n";
+    cout << "*                                    P250 Women                                           *\n";
     } else if (choice3 == 3) {
-    cout << "*                                    P700 Scalp Treatment                                 *\n";
+    cout << "*                                    P150 Kids                                            *\n";
     } else if (choice3 == 4) {
-    cout << "*                                    P1100 Rebonding                                      *\n";
+    cout << "*                                    P500 Hair & Makeup                                   *\n";
     } else if (choice3 == 5) {
-    cout << "*                                    P1500 Japanese Rebonding                             *\n";
-    } else if (choice3 == 6) {
-    cout << "*                                    P1800 Hair Color Change                              *\n";
-    } else if (choice3 == 7) {
-    cout << "*                                    P5500 Keratin Treatment                              *\n"; }
+    cout << "*                                    P180 Shampoo & Blowdry                               *\n"; }
     if (choice4 == 1) {                     
     cout << "*                                    Lourd Ryan Ramos                                     *\n";
     } else if (choice4 == 2) {
@@ -912,20 +981,75 @@ choice8 = -1;
     cout << "*                                    Henri Calayag                                        *\n";
     } else if (choice4 == 5) {
     cout << "*                                    Nelson Cruz                                          *\n";}
-    if (choice5 == 1) {
-    cout << "*                                    Monday                                               *\n";
-    } else if (choice5 == 2) {
-    cout << "*                                    Tuesday                                              *\n";
-    } else if (choice5 == 3) {
-    cout << "*                                    Wednesday                                            *\n";
-    } else if (choice5 == 4) {
-    cout << "*                                    Thursday                                             *\n";
-    } else if (choice5 == 5) {
-    cout << "*                                    Friday                                               *\n";
-    } else if (choice5 == 6) {
-    cout << "*                                    Saturday                                             *\n";
-    } else if (choice5 == 7) {
-    cout << "*                                    Sunday                                               *\n"; }
+    if (choice5 == 2 || choice5 == 9 || choice5 == 16 || choice5 == 23 || choice5 == 30) {
+        if (choice5 == 2)
+    cout << "*                                    Monday 2nd                                           *\n";
+        else if (choice5 == 9)
+    cout << "*                                    Monday 9th                                           *\n";
+        else if (choice5 == 16)
+    cout << "*                                    Monday 16th                                          *\n";
+        else if (choice5 == 23)
+    cout << "*                                    Monday 23rd                                          *\n";
+        else if (choice5 == 30)
+    cout << "*                                    Monday 30th                                          *\n"; 
+    } else if (choice5 == 3 || choice5 == 10 || choice5 == 17 || choice5 == 24 || choice5 == 31) {
+    if (choice5 == 3)
+    cout << "*                                    Tuesday 3rd                                          *\n";
+        else if (choice5 == 10)
+    cout << "*                                    Tuesday 10th                                         *\n";
+        else if (choice5 == 17)
+    cout << "*                                    Tuesday 17th                                         *\n";
+        else if (choice5 == 24)
+    cout << "*                                    Tuesday 24th                                         *\n";
+        else if (choice5 == 31)
+    cout << "*                                    Tuesday 31st                                         *\n";
+    } else if (choice5 == 4 || choice5 == 11 || choice5 == 18 || choice5 == 25) {
+    if (choice5 == 4)
+    cout << "*                                    Wednesday 4th                                        *\n";
+        else if (choice5 == 11)
+    cout << "*                                    Wednesday 11th                                       *\n";
+        else if (choice5 == 18)
+    cout << "*                                    Wednesday 18th                                       *\n";
+        else if (choice5 == 25)
+    cout << "*                                    Wednesday 25th                                       *\n";
+    } else if (choice5 == 5 || choice5 == 12 || choice5 == 19 || choice5 == 26) {
+    if (choice5 == 5)
+    cout << "*                                    Thursday 5th                                         *\n";
+        else if (choice5 == 12)
+    cout << "*                                    Thursday 12th                                        *\n";
+        else if (choice5 == 19)
+    cout << "*                                    Thursday 19th                                        *\n";
+        else if (choice5 == 26)
+    cout << "*                                    Thursday 26th                                        *\n";
+    } else if (choice5 == 6 || choice5 == 13 || choice5 == 20 || choice5 == 27) {
+    if (choice5 == 6)
+    cout << "*                                    Friday 6th                                           *\n";
+        else if (choice5 == 13)
+    cout << "*                                    Friday 13th                                          *\n";
+        else if (choice5 == 20)
+    cout << "*                                    Friday 20th                                          *\n";
+        else if (choice5 == 27)
+    cout << "*                                    Friday 27th                                          *\n";
+    } else if (choice5 == 7 || choice5 == 14 || choice5 == 21 || choice5 == 28) {
+    if (choice5 == 7)
+    cout << "*                                    Saturday 7th                                         *\n";
+        else if (choice5 == 14)
+    cout << "*                                    Saturday 14th                                        *\n";
+        else if (choice5 == 21)
+    cout << "*                                    Saturday 21st                                        *\n";
+        else if (choice5 == 28)
+    cout << "*                                    Saturday 28th                                        *\n";
+    } else if (choice5 == 1 || choice5 == 8 || choice5 == 15 || choice5 == 22 || choice5 == 29) {
+    if (choice5 == 1)
+    cout << "*                                    Sunday 1st                                           *\n";
+        else if (choice5 == 8)
+    cout << "*                                    Sunday 8th                                           *\n";
+        else if (choice5 == 15)
+    cout << "*                                    Sunday 15th                                          *\n";
+        else if (choice5 == 22)
+    cout << "*                                    Sunday 22nd                                          *\n";
+        else if (choice5 == 29)
+    cout << "*                                    Sunday 29th                                          *\n"; }
     if (choice6 == 1) {
     cout << "*                                    9:00am-9:45am                                        *\n";
     } else if (choice6 == 2) {
@@ -954,12 +1078,14 @@ choice8 = -1;
     cout << "*                                    BPI                                               *\n";
     } else if (choice7 == 7) {
     cout << "*                                    PayMaya                                              *\n";
+    }else if (choice7 == 8) {
+    cout << "*                                    Walk-in Payment                                      *\n";   
     }
     cout << "*                                                                                         *\n";
     cout << "*                                                                                         *\n";
-    cout << "* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\n";
-    printWordByWord("Press (1) if there is no changes needed to be done", 40);
-    printWordByWord("Press (0) if you want to go back and repeat the choices", 40);
+    cout << "* * * * * * * * * * * * * * * *  * * * * * * * * * * * * * * * * * * * * * *  * * * * * * *\n";
+    printWordByWord("Input (1) if there is no changes needed to be done", 40);
+    printWordByWord("Input (0) if you want to go back and repeat the choices", 40);
     cout << "Enter Your Choice: ";
         if (!readInt(choice8)) {
                     cout << "Invalid input.\n";
@@ -968,9 +1094,11 @@ choice8 = -1;
                 }
 
                 if (choice8 == 0) {
-                    // back to main menu
                     break;
-                } else if (choice8 == 1) {
+                } else if (choice7 == 8 && choice8 == 1) { 
+                cout << "Successfully booked, thank you!\n"; 
+                break; }
+                else if (choice8 == 1) {
     printWordByWord("Proceeding to the payment transaction...", 30);
                             
     do {                    
@@ -1022,7 +1150,6 @@ choice8 = -1;
 
                                 if (ok) {
                                     cout << "Successfully paid, Thank you!\n";
-                                    //MAG SAVE FOR PANGALAWA
                                     string service, stylist, day, time, payment;
                                     if (choice == 1) {
                                         if (choice3 == 1) service = "Men Haircut";
@@ -1046,13 +1173,15 @@ choice8 = -1;
                                     else if (choice4 == 4) stylist = "Henri Calayag";
                                     else if (choice4 == 5) stylist = "Nelson Cruz";
                                     
-                                    if (choice5 == 1) day = "Monday";
-                                    else if (choice5 == 2) day = "Tuesday";
-                                    else if (choice5 == 3) day = "Wednesday";
-                                    else if (choice5 == 4) day = "Thursday";
-                                    else if (choice5 == 5) day = "Friday";
-                                    else if (choice5 == 6) day = "Saturday";
-                                    else if (choice5 == 7) day = "Sunday";
+                                    int date = choice5;
+                                    int dayofweek = choice5 % 7;
+                                    if (dayofweek == 1) day = "Sunday";
+                                    else if (dayofweek == 2) day = "Monday";
+                                    else if (dayofweek == 3) day = "Tuesday";
+                                    else if (dayofweek == 4) day = "Wednesday";
+                                    else if (dayofweek == 5) day = "Thursday";
+                                    else if (dayofweek == 6) day = "Friday";
+                                    else if (dayofweek == 0) day = "Saturday";
                                     
                                     if (choice6 == 1) time = "9:00am-9:45am";
                                     else if (choice6 == 2) time = "11:00am-11:45am";
@@ -1069,9 +1198,10 @@ choice8 = -1;
                                     else if (choice7 == 5) payment = "BDO";
                                     else if (choice7 == 6) payment = "BPI";
                                     else if (choice7 == 7) payment = "PayMaya";
-                                    string schedule = day + " " + time;
+                                    else if (choice7 == 8) payment = "Walk-in Payment";
+                                    string schedule = date + " " + day + " " + time;
 
-                                    insertData(dbFile, name, service, stylist, day, time, payment, choice9);
+                                    insertData(dbFile, name, service, stylist, day, date, time, payment, choice9);
 
                                     break;
                                 } else {
@@ -1091,8 +1221,9 @@ choice8 = -1;
          }
                 continue;
             }
-            } // end treatments submenu
+            } 
     break;
     
         }  while (true);
-     } 
+     }
+}
